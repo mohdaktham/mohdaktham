@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Stage {
+  SAVED
+  SUBMITTED
+  INTERVIEW_1
+  INTERVIEW_2
+  INTERVIEW_3
+  INTERVIEW_4
+  OFFER
+  REJECTED
+}
+
+model Application {
+  id          String    @id @default(cuid())
+  source      String    @default("adzuna")
+  externalId  String
+  title       String
+  company     String
+  location    String
+  salaryMin   Int?
+  salaryMax   Int?
+  description String    @db.Text
+  applyUrl    String
+  postedAt    DateTime?
+  stage       Stage     @default(SAVED)
+  notes       String?   @db.Text
+  appliedDate DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@unique([source, externalId])
+  @@index([stage])
+}

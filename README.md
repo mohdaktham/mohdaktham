@@ -1,24 +1,63 @@
-# Hi, I'm Mo 👋
+# Job Tracker
 
-**Data Analyst** · Toronto/Waterloo, ON · MSc Management Analytics @ Wilfrid Laurier University (Aug 2026) · Analytics Consultant @ **BC Housing**
+A personal job-search and application tracker: search for jobs by location and title, save the ones you like, then track each one through your pipeline — Saved → Submitted → Interview 1–4 → Offer / Rejected.
 
-I turn messy datasets into decisions — SQL, Python, Power BI, and Advanced Excel.
+- **Search** (`/search`) — pulls live listings from the [Adzuna API](https://developer.adzuna.com/) (Canada), with a modern card UI showing title, company, location, salary, and a direct link to the application portal. Falls back to sample data if no API keys are configured.
+- **Tracker** (`/tracker`) — a Kanban board of everything you've saved. Drag a card between columns or use the stage dropdown to update where an application stands. Add notes and an applied date per job.
 
-### 🔗 Portfolio
-**[mohdaktham.github.io](https://mohdaktham.github.io)** — 5 end-to-end analytics projects with reproducible code and business findings.
+Built with Next.js (App Router) + TypeScript + Tailwind, Prisma + PostgreSQL, and no login system — it's a single-user tool for your own job search.
 
-### 📌 Highlights
+## Quick start (local dev)
 
-| Project | What it shows |
-|---------|---------------|
-| [BC Housing Completions Forecast](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/05-bc-housing-forecast) | Production ML forecasting for a Crown corporation — 11.1% WAPE vs 20.7% naive |
-| [TTC Subway Delay Analysis](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/01-ttc-subway-delays) | 64K+ real Toronto Open Data records; 126 days of lost service quantified |
-| [Customer Churn: Drivers & Revenue at Risk](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/03-customer-churn) | Interpretable ML (AUC 0.837) translated into a retention playbook |
-| [Retail Sales Analytics in SQL](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/02-sql-retail-analytics) | CTEs, window functions, cohort retention, RFM segmentation |
-| [Walmart Sales Forecasting](https://github.com/mohdaktham/projects/tree/main/611-group-project) | Deep learning (XGBoost vs LSTM) with SHAP interpretability |
+You need a local PostgreSQL database. Two options:
 
-### 🛠 Toolkit
-`SQL` `Python (pandas, scikit-learn)` `Power BI / DAX` `Advanced Excel` `Tableau` `R` `Git`
+**Docker (recommended on your own machine):**
 
-### 📫 Contact
-[Mohammadaktham@gmail.com](mailto:Mohammadaktham@gmail.com) · [LinkedIn](https://linkedin.com/in/mo-maghaireh-868554170)
+```bash
+docker compose up -d
+```
+
+**No Docker?** Point `DATABASE_URL` at any Postgres instance you have (a native install, `prisma dev`, a free Supabase project, etc.).
+
+Then:
+
+```bash
+cp .env.example .env      # edit if your DB isn't the default docker-compose one
+npm install                # also runs `prisma generate` via postinstall
+npx prisma migrate dev --name init
+npm run db:seed            # optional: adds sample tracked applications
+npm run dev
+```
+
+Open http://localhost:3000 — it redirects to `/search`.
+
+Without `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` set, the search page runs in **demo mode** with realistic sample listings so you can try the whole app immediately. To search real jobs, get a free key pair at https://developer.adzuna.com/ and add them to `.env`.
+
+## Environment variables
+
+See `.env.example` for the full list:
+
+- `DATABASE_URL` — Postgres connection string used at runtime.
+- `DIRECT_URL` — non-pooled connection string used only for migrations (matters for Supabase's connection pooler; same value as `DATABASE_URL` for local dev).
+- `ADZUNA_APP_ID` / `ADZUNA_APP_KEY` — from https://developer.adzuna.com/. Leave blank to run in demo mode.
+
+## Deploying (Vercel + Supabase)
+
+1. Create a free [Supabase](https://supabase.com) project. In Project Settings → Database, copy the **pooled** connection string (port 6543) as `DATABASE_URL` and the **direct** connection string (port 5432) as `DIRECT_URL`.
+2. Run migrations against Supabase once before your first deploy: `DATABASE_URL="<direct-url>" npx prisma migrate deploy`.
+3. Deploy this repo to [Vercel](https://vercel.com/new). Set `DATABASE_URL`, `DIRECT_URL`, `ADZUNA_APP_ID`, and `ADZUNA_APP_KEY` as project environment variables.
+
+## Project structure
+
+```
+prisma/schema.prisma       Application model + Stage enum
+prisma/seed.ts             sample tracked applications for local dev
+src/app/search/            job search page
+src/app/tracker/           Kanban tracker page
+src/app/api/jobs/search/   proxies Adzuna (keeps API keys server-side)
+src/app/api/tracker/       CRUD for tracked applications
+src/lib/adzuna.ts          Adzuna client + demo-mode fallback
+src/lib/stages.ts          stage order/labels, single source of truth
+src/components/search/     search form, job cards, save button
+src/components/tracker/    Kanban board, columns, cards, stage select
+```
