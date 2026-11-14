@@ -22,7 +22,7 @@ A SQL workbench that runs in the browser and as a desktop app. Import CSV, JSON 
 - **Engineering:** queries run off the main thread, sandboxed desktop shell, strict content security policy
 - **Quality:** unit, component and end-to-end tests, run on Windows, macOS and Linux on every push
 
-**[Open the live site](https://tesserasql.vercel.app/)** · **[Source code](https://github.com/mohdaktham/tessera)** · **[Download](https://github.com/mohdaktham/tessera/releases)**
+**[Open the live app](https://tesserasql.vercel.app/)** · **[Read the case study](https://mohdaktham.github.io/projects/tessera/)** · **[Source code](https://github.com/mohdaktham/tessera)** · **[Download](https://github.com/mohdaktham/tessera/releases)**
 
 ---
 
@@ -30,14 +30,15 @@ A SQL workbench that runs in the browser and as a desktop app. Import CSV, JSON 
 
 | Project | What it shows |
 | --- | --- |
-| [BC Housing Completions Forecast](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/05-bc-housing-forecast) | Client forecasting engagement for a Crown corporation: 11.1% WAPE vs 20.7% for a naive forecast, with calibrated prediction intervals |
-| [Fraud Model Monitoring](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/06-fraud-model-monitoring) | Monthly AUC, KS, PSI and CSI checks that separate a broken data feed from a new fraud pattern (simulated data, unit tested) |
-| [Customer Churn: Drivers and Revenue at Risk](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/03-customer-churn) | Interpretable classification (test AUC 0.837) turned into a retention playbook |
-| [Retail Sales Analytics in SQL](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/02-sql-retail-analytics) | CTEs, window functions, cohort retention, RFM segmentation |
-| [TTC Subway Delay Analysis](https://github.com/mohdaktham/mohdaktham.github.io/tree/main/projects/01-ttc-subway-delays) | 64K+ real Toronto Open Data records; 126 days of lost service quantified |
+| [BC Housing Completions Forecast](https://mohdaktham.github.io/projects/05-bc-housing-forecast/) | Client forecasting engagement for a Crown corporation: 11.1% WAPE vs 20.7% for a naive forecast, with calibrated prediction intervals |
+| [Fraud Model Monitoring](https://mohdaktham.github.io/projects/06-fraud-model-monitoring/) | Monthly AUC, KS, PSI and CSI checks that separate a broken data feed from a new fraud pattern (simulated data, unit tested) |
+| [Customer Churn: Drivers and Revenue at Risk](https://mohdaktham.github.io/projects/03-customer-churn/) | Interpretable classification (test AUC 0.837) turned into a retention playbook |
+| [Retail Sales Analytics in SQL](https://mohdaktham.github.io/projects/02-sql-retail-analytics/) | CTEs, window functions, cohort retention, RFM segmentation |
+| [TTC Subway Delay Analysis](https://mohdaktham.github.io/projects/01-ttc-subway-delays/) | 64K+ real Toronto Open Data records; 126 days of lost service quantified |
+| [Executive KPI Dashboard in Excel](https://mohdaktham.github.io/projects/04-excel-kpi-dashboard/) | A three-sheet workbook where every number is a live formula, regenerated from the data by a script |
 | [Walmart Sales Forecasting](https://github.com/mohdaktham/projects/tree/main/611-group-project) | XGBoost vs LSTM with SHAP interpretability |
 
-More on the portfolio site: **[mohdaktham.github.io](https://mohdaktham.github.io)**, with reproducible code and findings for each project.
+The first six open case studies on **[mohdaktham.github.io](https://mohdaktham.github.io)**, with the method, the findings and the code. The site also maps each skill to the projects that show it.
 
 ---
 
